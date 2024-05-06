@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Noble Hospital | Patient Portal</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url('https://example.com/background.jpg'); /* Background image for the entire screen */
+      background-repeat: no-repeat;
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background-color: rgba(255, 255, 255, 0.8); /* Adjust the opacity as needed */
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+    }
+    h1, h2 {
+      text-align: center;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      margin-bottom: 10px;
+    }
+    label {
+      font-weight: bold;
+    }
+    input[type="text"],
+    input[type="password"],
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+
+    /* No background image for these sections */
+    #login,
+    #appointment-details,
+    #appointment-confirmation,
+    #thank-you {
+      background-image: ;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <section id="welcome">
+      <h1>Welcome to Noble Hospital</h1>
+      <p>Your premier healthcare provider</p>
+      <button onclick="showLogin()">Login</button>
+    </section>
+
+    <section id="login" style="display:none;">
+      <h2>Login to Patient Portal</h2>
+      <form id="loginForm" onsubmit="return validateForm()">
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" required>
+        </div>
+        <div class="form-group">
+          <label for="otp">OTP:</label>
+          <input type="text" id="otp" name="otp" required>
+          <button type="button" onclick="generateOTP()">Get OTP</button>
+        </div>
+        <button type="submit">Login</button>
+      </form>
+    </section>
+
+    <section id="appointment-details" style="display:none;">
+      <h2>Book an Appointment</h2>
+      <p>Select your preferred appointment:</p>
+      <ul>
+        <li><button onclick="bookAppointment('General Checkup', 'Dr. Smith')">General Checkup</button></li>
+        <li><button onclick="bookAppointment('Dental Consultation', 'Dr. Johnson')">Dental Consultation</button></li>
+        <li><button onclick="bookAppointment('Orthopedic Evaluation', 'Dr. Williams')">Orthopedic Evaluation</button></li>
+        <li><button onclick="bookAppointment('Cardiology Consultation', 'Dr. Brown')">Cardiology Consultation</button></li>
+      </ul>
+      <p id="selected-appointment"></p>
+      <button onclick="confirmAppointment()">Confirm Appointment</button>
+    </section>
+
+    <section id="appointment-confirmation" style="display:none;">
+      <h2>Appointment Confirmation</h2>
+      <p>Your appointment has been successfully booked!</p>
+    </section>
+    
+    <section id="thank-you" style="display:none;">
+      <h2>Thank You for Choosing Elite Hospital!</h2>
+    </section>
+  </div>
+
+  <script>
+    var generatedOTP = null;
+
+    function validateForm() {
+      var username = document.getElementById("username").value;
+      var password = document.getElementById("password").value;
+      var otp = document.getElementById("otp").value;
+
+      if (generatedOTP === null) {
+        alert("Please generate OTP first.");
+        return false;
+      }
+
+      if (username === "patient123" && password === "password" && parseInt(otp) === generatedOTP) {
+        document.getElementById("welcome").style.display = "none";
+        document.getElementById("login").style.display = "none";
+        document.getElementById("appointment-details").style.display = "block";
+        return false;
+      } else {
+        alert("Invalid username, password, or OTP.");
+        return false;
+      }
+    }
+
+    function showLogin() {
+      document.getElementById("welcome").style.display = "none";
+      document.getElementById("login").style.display = "block";
+    }
+
+    function generateOTP() {
+      generatedOTP = Math.floor(100000 + Math.random() * 900000);
+      alert("Your OTP is: " + generatedOTP);
+    }
+
+    function bookAppointment(appointment, doctor) {
+      document.getElementById("selected-appointment").innerText = "You selected: " + appointment + " with " + doctor;
+    }
+
+    function confirmAppointment() {
+      document.getElementById("appointment-details").style.display = "none";
+      document.getElementById("appointment-confirmation").style.display = "block";
+      document.getElementById("thank-you").style.display = "block";
+    }
+  </script>
+  
+</body>
+</html>
